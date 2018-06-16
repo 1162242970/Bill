@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<litepal>
+    <dbname value="SimpleBook"></dbname>
+    <version value="1"></version>
+    <list>
+        <mapping class="com.felix.simplebook.database.InfoBean"></mapping>
+        <mapping class="com.felix.simplebook.database.TypeBean"></mapping>
+        <mapping class="com.felix.simplebook.database.UserProfile"/>
+    </list>
+</litepal>
