@@ -35,27 +35,11 @@
 
             <android.support.v7.widget.AppCompatImageView
                 android:layout_width="wrap_content"
-                android:layout_height="72dp"
+                android:layout_height="100dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="24dp"
                 android:src="@drawable/logo"/>
 
-            <!--姓名-->
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:theme="@style/EditTextTheme"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                >
-
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/edit_sign_up_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/sign_up_name"
-                    android:inputType="textPersonName" />
-            </android.support.design.widget.TextInputLayout>
 
             <!--邮箱-->
             <android.support.design.widget.TextInputLayout
@@ -71,6 +55,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/sign_up_mail"
+                    android:textSize="13sp"
                     android:inputType="textEmailAddress" />
             </android.support.design.widget.TextInputLayout>
 
@@ -89,6 +74,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/sign_up_phone"
                     android:maxLength="11"
+                    android:textSize="13sp"
                     android:inputType="phone" />
             </android.support.design.widget.TextInputLayout>
 
@@ -106,7 +92,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/sign_up_password"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:textSize="13sp"
+                    />
             </android.support.design.widget.TextInputLayout>
 
             <!--重复密码-->
@@ -123,7 +111,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/sign_up_rePassword"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:textSize="13sp"
+                    />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.v7.widget.AppCompatButton
@@ -136,6 +126,7 @@
                 android:gravity="center"
                 android:padding="12dp"
                 android:text="@string/sign_up_register"
+                android:textSize="13sp"
                 android:textColor="@android:color/white"
                 />
 
@@ -147,7 +138,7 @@
                 android:gravity="center"
                 android:padding="12dp"
                 android:text="@string/sign_up_linkSignIn"
-                android:textSize="16sp"
+                android:textSize="12sp"
                 />
 
         </android.support.v7.widget.LinearLayoutCompat>

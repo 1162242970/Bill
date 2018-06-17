@@ -1,59 +1,50 @@
 package com.felix.simplebook.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.felix.simplebook.R;
 import com.felix.simplebook.activity.sign.SignInActivity;
-import com.felix.simplebook.callback.ITimerListener;
 import com.felix.simplebook.callback.IUserChecker;
 import com.felix.simplebook.activity.sign.AccountManager;
-import com.felix.simplebook.utils.timer.BaseTimerTask;
+import com.felix.simplebook.utils.MyToast;
 import com.felix.simplebook.utils.MyPreference;
 
-import java.text.MessageFormat;
+
 import java.util.Timer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class StartActivity extends Activity implements ITimerListener {
-    @BindView(R.id.tv_launcher_timer)
-    TextView mTvTimer = null;
+public class StartActivity extends Activity  {
 
-    private Timer mTimer = null;
-    private int mCount = 3;
+    @BindView(R.id.btn_ok_activity_start)
+    Button btnOk;
+    @BindView(R.id.et_password_activity_start)
+    EditText etPassword;
+
+    private String password;
+    private SharedPreferences preferences;
+    private Unbinder bind;
 
     public final String HAS_FIRST_LAUNCHER_APP = "HAS_FIRST_LAUNCHER_APP";
 
-    @OnClick(R.id.tv_launcher_timer)
-    void onClickTimerView() {
-        if (mTimer != null) {
-            mTimer.cancel();
-            mTimer = null;
-            checkIsShowScroll();
-        }
-    }
-
-    private void initTime() {
-        mTimer = new Timer();
-        final BaseTimerTask task = new BaseTimerTask(this);
-        mTimer.schedule(task, 0, 1000);
-    }
-
-    private Unbinder bind;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
         bind = ButterKnife.bind(StartActivity.this);
-        initTime();
+
     }
 
     //判断是否显示滑动启动页
@@ -83,26 +74,50 @@ public class StartActivity extends Activity implements ITimerListener {
         });
     }
 
+
+
     @Override
-    public void onTimer() {
-        runOnUiThread(new Runnable() {
+    protected void onResume() {
+        super.onResume();
+        btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void run() {
-                if (mTvTimer != null) {
-                    mTvTimer.setText(MessageFormat.format("跳过\n{0}s", mCount));
-                    mCount--;
-                    if (mCount < 0) {
-                        if (mTimer != null) {
-                            mTimer.cancel();
-                            mTimer = null;
-                            checkIsShowScroll();
-                        }
-                    }
+            public void onClick(View view) {
+                if (etPassword.getText().toString().trim().equals(password)) {
+                    checkIsShowScroll();
+                    finish();
+                } else {
+                    MyToast.makeText(StartActivity.this, "密码输入错误", Toast.LENGTH_SHORT)
+                            .show();
                 }
             }
         });
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        preferences = getSharedPreferences("config.sb",
+                                Context.MODE_PRIVATE);
+                        password = preferences.getString("password", "no_password");
+                        if (password.equals("no_password")) {
+                            checkIsShowScroll();
+                            finish();
+                        } else {
+                            etPassword.setVisibility(View.VISIBLE);
+                            btnOk.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+            }
+        }.start();
     }
-
 
     @Override
     protected void onDestroy() {

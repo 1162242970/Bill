@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">简账</string>
+    <string name="app_name">个人账单</string>
     <string name="nav_title">简、是一种态度</string>
     <string name="title_activity_login">Sign in</string>
     <string name="home_show_title">添加/编辑</string>
@@ -76,12 +76,12 @@
     <string name="sign_up_phone">"手机号码"</string>
     <string name="sign_up_password">"密码"</string>
     <string name="sign_up_rePassword">"重复密码"</string>
-    <string name="sign_up_register">"注册"</string>
+    <string name="sign_up_register">"注            册"</string>
     <string name="sign_up_linkSignIn">"已经注册了？请登录"</string>
 
     <string name="sign_in_logo">"登录"</string>
     <string name="sign_in_phone">"手机号码"</string>
     <string name="sign_in_password">"密码"</string>
-    <string name="sign_in_signIn">"登录"</string>
+    <string name="sign_in_signIn">"登            录"</string>
     <string name="sign_in_linkSignUp">"还没有账户？现在注册吧"</string>
 </resources>

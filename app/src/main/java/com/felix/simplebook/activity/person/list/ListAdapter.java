@@ -20,7 +20,8 @@ import java.util.List;
 public class ListAdapter extends BaseMultiItemQuickAdapter<ListBean, BaseViewHolder> {
 
     private static final RequestOptions OPTIONS = new RequestOptions()
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
+            .skipMemoryCache(true)
             .dontAnimate()
             .centerCrop();
 

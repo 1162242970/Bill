@@ -19,8 +19,12 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.felix.simplebook.R;
 import com.felix.simplebook.activity.person.UserProfileActivity;
 import com.felix.simplebook.base.BaseActivity;
@@ -30,6 +34,7 @@ import com.felix.simplebook.fragment.HomeFragment;
 import com.felix.simplebook.fragment.ManagerFragment;
 import com.felix.simplebook.presenter.HomePresenter;
 import com.felix.simplebook.utils.MyLog;
+import com.felix.simplebook.utils.MyPreference;
 import com.felix.simplebook.view.IHomeView;
 
 import butterknife.BindView;
@@ -66,6 +71,11 @@ public class HomeActivity extends BaseActivity implements IHomeView {
     private ActionBar actionBar;
 
     private HomePresenter presenter;
+    CircleImageView circleImageView = null;
+
+    private static final RequestOptions OPTIONS = new RequestOptions()
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
+            .skipMemoryCache(true);
 
     @Override
     public int initLayout() {
@@ -106,7 +116,9 @@ public class HomeActivity extends BaseActivity implements IHomeView {
                 startActivity(intent);
             }
         });
-        CircleImageView circleImageView = headerLayout.findViewById(R.id.img_nav_head);
+        circleImageView = headerLayout.findViewById(R.id.img_nav_head);
+        circleImageView.setBackgroundResource(R.drawable.logo);
+
         circleImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -175,6 +187,8 @@ public class HomeActivity extends BaseActivity implements IHomeView {
 //        return true;
 //    }
 
+
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -229,6 +243,14 @@ public class HomeActivity extends BaseActivity implements IHomeView {
     @Override
     protected void onResume() {
         super.onResume();
+        String photo = MyPreference.getCustomAppProfile("photos");
+        if (!(photo.equals(""))){
+            Glide.with(this)
+                    .load(MyPreference.getCustomAppProfile("photos"))
+                    .apply(OPTIONS)
+                    .into(circleImageView);
+        }
+
         presenter.query();
     }
 

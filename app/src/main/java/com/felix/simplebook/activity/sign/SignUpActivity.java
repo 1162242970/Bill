@@ -40,8 +40,7 @@ import static org.litepal.LitePalApplication.getContext;
 
 public class SignUpActivity extends SignBaseActivity {
 
-    @BindView(R.id.edit_sign_up_name)
-    TextInputEditText mName = null;
+
     @BindView(R.id.edit_sign_up_email)
     TextInputEditText mEmail = null;
     @BindView(R.id.edit_sign_up_phone)
@@ -112,7 +111,7 @@ public class SignUpActivity extends SignBaseActivity {
      * 检查注册的数据是否合适
      */
     private boolean checkForm() {
-        final String name = mName.getText().toString();
+
         final String email = mEmail.getText().toString();
         final String phone = mPhone.getText().toString();
         final String password = mPassword.getText().toString();
@@ -120,12 +119,7 @@ public class SignUpActivity extends SignBaseActivity {
 
         boolean isPass = true;
 
-        if (name.isEmpty()) {
-            mName.setError("请输入姓名");
-            isPass = false;
-        } else {
-            mEmail.setError(null);
-        }
+
 
         if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             mEmail.setError("错误的邮箱格式");

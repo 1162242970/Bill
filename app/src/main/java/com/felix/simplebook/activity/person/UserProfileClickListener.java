@@ -13,6 +13,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.annotation.GlideOption;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.SimpleClickListener;
 import com.felix.simplebook.R;
@@ -60,6 +63,10 @@ public class UserProfileClickListener extends SimpleClickListener {
     private final PermissionCheckerActivity ACTIVITY;
     private final UserProfileActivity USERACTIVITY;
 
+    private static final RequestOptions OPTIONS = new RequestOptions()
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
+            .skipMemoryCache(true);
+
     private String[] mGenders = new String[]{"男", "女", "保密"};
 
     private static final String API_HOST = "你的服务器域名";
@@ -84,8 +91,10 @@ public class UserProfileClickListener extends SimpleClickListener {
                             public void executeCallback(@Nullable final Uri args) {
                                 //为ImageView设置头像
                                 final ImageView avatar = view.findViewById(R.id.img_arrow_avatar);
+
                                 Glide.with(ACTIVITY)
                                         .load(args)
+                                        .apply(OPTIONS)
                                         .into(avatar);
 
                                 //上传服务器
@@ -122,8 +131,8 @@ public class UserProfileClickListener extends SimpleClickListener {
                                                 fis.close();
                                                 fos.close();
 
-                                                doPost(afterPath +"/"+ lastName);
-
+                                                doPost(afterPath + "/" + lastName);
+                                                MyPreference.addCustomAppProfile("photos", "http://120.78.138.94:8080/server/Restore?username=" + lastName);
 
                                             } catch (Exception e) {
                                                 e.printStackTrace();
@@ -174,9 +183,9 @@ public class UserProfileClickListener extends SimpleClickListener {
                 break;
             case 2:
                 //进入更改姓名界面
-                final Intent intent = new Intent(LitePalApplication.getContext(), NameActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                LitePalApplication.getContext().startActivity(intent);
+//                final Intent intent = new Intent(LitePalApplication.getContext(), NameActivity.class);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                LitePalApplication.getContext().startActivity(intent);
 
                 break;
             case 3:
@@ -198,6 +207,7 @@ public class UserProfileClickListener extends SimpleClickListener {
                     public void onDateChange(String date) {
                         final TextView textView = view.findViewById(R.id.tv_arrow_value);
                         textView.setText(date);
+                        MyPreference.addCustomAppProfile("date", date);
                     }
                 });
                 dateDialogUtil.showDialog(ACTIVITY);

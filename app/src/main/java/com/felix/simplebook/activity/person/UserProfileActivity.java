@@ -82,20 +82,20 @@ public class UserProfileActivity extends PermissionCheckerActivity {
                 .setItemType(ListItemType.ITEM_NORMAL)
                 .setId(3)
                 .setText("性别")
-                .setValue("未知")
+                .setValue(MyPreference.getCustomAppProfile("gender"))
                 .build();
 
         final ListBean birth = new ListBean.Builder()
                 .setItemType(ListItemType.ITEM_NORMAL)
                 .setId(4)
                 .setText("生日")
-                .setValue("")
+                .setValue(MyPreference.getCustomAppProfile("date"))
                 .build();
 
         data.add(image);
         data.add(name);
-        data.add(gender);
-        data.add(birth);
+//        data.add(gender);
+//        data.add(birth);
 
 
         //设置RecyclerView
